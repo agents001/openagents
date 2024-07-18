@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 import sys
 from typing import Any, Callable, Dict, List, Mapping, Optional, Tuple, Union
-from pydantic import Extra, Field, root_validator
+from langchain_core.pydantic_v1 import Extra, Field, root_validator
 from tenacity import (
     before_sleep_log,
     retry,
@@ -43,13 +43,13 @@ def _create_retry_decorator(llm: ChatOpenAI) -> Callable[[Any], Any]:
         reraise=True,
         stop=stop_after_attempt(llm.max_retries),
         wait=wait_exponential(multiplier=1, min=min_seconds, max=max_seconds),
-        retry=(
-                retry_if_exception_type(openai.error.Timeout)
-                | retry_if_exception_type(openai.error.APIError)
-                | retry_if_exception_type(openai.error.APIConnectionError)
-                | retry_if_exception_type(openai.error.RateLimitError)
-                | retry_if_exception_type(openai.error.ServiceUnavailableError)
-        ),
+        # retry=(
+        #         # retry_if_exception_type(openai.error.Timeout)
+        #         # | retry_if_exception_type(openai.error.APIError)
+        #         # | retry_if_exception_type(openai.error.APIConnectionError)
+        #         # | retry_if_exception_type(openai.error.RateLimitError)
+        #         # | retry_if_exception_type(openai.error.ServiceUnavailableError)
+        # ),
         before_sleep=before_sleep_log(logger, logging.WARNING),
     )
 
@@ -233,13 +233,13 @@ class ChatOpenAI(BaseChatModel):
             reraise=True,
             stop=stop_after_attempt(self.max_retries),
             wait=wait_exponential(multiplier=1, min=min_seconds, max=max_seconds),
-            retry=(
-                    retry_if_exception_type(openai.error.Timeout)
-                    | retry_if_exception_type(openai.error.APIError)
-                    | retry_if_exception_type(openai.error.APIConnectionError)
-                    | retry_if_exception_type(openai.error.RateLimitError)
-                    | retry_if_exception_type(openai.error.ServiceUnavailableError)
-            ),
+            # retry=(
+            #         # retry_if_exception_type(openai.error.Timeout)
+            #         # | retry_if_exception_type(openai.error.APIError)
+            #         # | retry_if_exception_type(openai.error.APIConnectionError)
+            #         # | retry_if_exception_type(openai.error.RateLimitError)
+            #         # | retry_if_exception_type(openai.error.ServiceUnavailableError)
+            # ),
             before_sleep=before_sleep_log(logger, logging.WARNING),
         )
 

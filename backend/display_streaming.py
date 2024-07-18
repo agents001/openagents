@@ -5,8 +5,8 @@ import re
 import ast
 
 import mo_sql_parsing
-from pydantic import BaseModel
-
+#from langchain_core.pydantic_v1 import BaseModel
+from langchain_core.pydantic_v1 import BaseModel
 from real_agents.adapters.data_model import MessageDataModel, DataModel
 
 
@@ -212,5 +212,12 @@ class DisplayStream(BaseModel):
                 tool_response_list.append({"text": chart_json, "type": "echarts", "final": False})
             else:
                 tool_response_list.append({"text": f"""```json{chart_json}```""", "type": "plain", "final": False})
+        if "table" in observation:
+            table_json = observation["table"]
+
+            if is_json(table_json):
+                tool_response_list.append({"text": table_json, "type": "table", "final": True})
+            else:
+                tool_response_list.append({"text": f"""```json{table_json}```""", "type": "plain", "final": False})
 
         return tool_response_list
