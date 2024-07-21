@@ -446,7 +446,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             ) : (
               <>
                 <div className="sticky fixed top-0 h-[3.6rem] leading-[3.6rem] z-10 flex items-center justify-center space-x-20 bg-[#F3F3F3] text-base text-[#666666]">
-                  <div>
+                  {/*<div>
                     <span className="font-[600]">{t('Agent')}:</span>
                     <span className="ml-2">
                       {selectedConversation?.agent.name}
@@ -487,7 +487,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                           ),
                         )}
                     </div>
-                  </div>
+                  </div>*/}
                 </div>
 
                 {showSettings && (
