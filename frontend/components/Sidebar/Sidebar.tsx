@@ -96,10 +96,10 @@ const Sidebar = <T,>({
           <CloseSidebarButton onClick={toggleOpen} side={side} />
         </div>
         <span className="border-t border-white/50 pt-3 pl-3 text-white font-[500] text-lg">
-          Chats
+          以前的对话历史
         </span>
         <Search
-          placeholder="Search Chat"
+          placeholder="输入对话内容以搜索对话历史"
           searchTerm={searchTerm}
           onSearch={handleSearchTerm}
         />

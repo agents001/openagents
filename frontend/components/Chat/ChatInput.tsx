@@ -223,7 +223,7 @@ export const ChatInput = ({
                     : 'hidden'
                 }`,
               }}
-              placeholder={'Send a message'}
+              placeholder={'在此处写下你的问题，并点击右侧的“发送”按钮来发送给智能助手！'}
               value={content}
               rows={1}
               onCompositionStart={() => setIsTyping(true)}
@@ -240,7 +240,8 @@ export const ChatInput = ({
               {messageIsStreaming ? (
                 <div className="h-6 w-6 mt-1 mr-1 animate-spin rounded-full border-t-2 border-neutral-800 opacity-60"></div>
               ) : (
-                <IconSend size={26} className="mt-1 mr-1" />
+                // <IconSend size={26} className="mt-1 mr-1" />
+                <div className="mt-1 mr-1" style={{width: '50px', height: '26px', backgroundColor: 'green', color: 'white', borderRadius: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>发送</div>
               )}
             </button>
           )}

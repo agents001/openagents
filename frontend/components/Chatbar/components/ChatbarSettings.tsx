@@ -216,9 +216,9 @@ export const ChatbarSettings = <T,>({
   return (
     <>
       <div className="flex flex-col space-y-1 border-t border-white/50 pt-1 text-sm">
-        <span className="pl-3 pt-1 text-white font-[500] text-lg">Files</span>
+        <span className="pl-3 pt-1 text-white font-[500] text-lg">已上传的文件</span>
         <Search
-          placeholder="Search File"
+          placeholder="输入文件名以搜索文件"
           searchTerm={searchTerm}
           onSearch={handleSearchTerm}
         />
@@ -245,7 +245,7 @@ export const ChatbarSettings = <T,>({
             }}
           >
             <IconPlus size={16} />
-            {t('Upload')}
+            {t('上传新的文件！')}
           </button>
 
           <button

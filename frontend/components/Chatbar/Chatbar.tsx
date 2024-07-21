@@ -277,7 +277,7 @@ export const Chatbar = () => {
       <Sidebar<ConversationNameListItem>
         side={'left'}
         isOpen={showChatbar}
-        addItemButtonTitle={t('New Chat')}
+        addItemButtonTitle={t('新建一个对话！')}
         itemComponent={
           <Conversations conversationNameList={filteredConversations} />
         }
