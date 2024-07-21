@@ -151,7 +151,8 @@ def serialize_df(
     """Convert dataframe to a string representation."""
     if serialize_method == "tsv":
         # Here it means ignore the "path/to/the/data/<user_id/" part of the path
-        pretty_path = "/".join(table_path.split(data_dir_splitter)[-1].strip("/").split("/")[1:])
+        # pretty_path = "/".join(table_path.split(data_dir_splitter)[-1].strip("/").split("/")[1:])
+        pretty_path = table_path
         string = (
             "Here are table columns and the first {} rows of the table from the path {}"
             '(only a small part of the whole table) called "{}":\n'.format(num_visible_rows, pretty_path, table_name)
