@@ -332,15 +332,83 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             {selectedConversation?.messages.length === 0 ? (
               <>
                 <div className="flex flex-col space-y-5 w-full h-full">
-                  <div className="pl-20 pt-16 space-y-5">
+                  {/* <div className="pl-20 pt-16 space-y-5">
                     <div className="text-left text-3xl font-[500] text-gray-800">
                       Hi!
                     </div>
                     <div className="text-left text-lg font-[500] text-gray-800">
                       Please choose your Agent & Plugins to continue
                     </div>
+                  </div> */}
+                  <div className="flex justify-center items-center h-[500px] bg-gray-100">
+                    <div>
+                      <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">你好！我是外交领域大模型助手。</h1>
+                      <div className="flex h-full">
+                        {/* 左列 */}
+                        <div className="w-1/2 pr-4 flex items-stretch">
+                          <div className="flex flex-col w-full bg-white rounded-lg shadow-md items-center justify-center text-black font-bold p-4">
+                            📧您可以从这些问题开始：
+                            <div>
+                              <QuestionSuggestion
+                                followUpQuestions={["分析近期台海局势"]}
+                                scrollToBottom={() => {
+                                  messagesEndRef.current?.scrollIntoView({
+                                    behavior: 'smooth',
+                                  });
+                                }}
+                                onClick={(message) => {
+                                  setCurrentMessage(message);
+                                  handleSend(message, 0, false, null);
+                                }}
+                              />
+                            </div>
+                            <div>
+                              <QuestionSuggestion
+                                followUpQuestions={["近期俄乌战场情况如何？"]}
+                                scrollToBottom={() => {
+                                  messagesEndRef.current?.scrollIntoView({
+                                    behavior: 'smooth',
+                                  });
+                                }}
+                                onClick={(message) => {
+                                  setCurrentMessage(message);
+                                  handleSend(message, 0, false, null);
+                                }}
+                              />
+                            </div>
+                            <div>
+                              <QuestionSuggestion
+                                followUpQuestions={["请分析美国大选局势"]}
+                                scrollToBottom={() => {
+                                  messagesEndRef.current?.scrollIntoView({
+                                    behavior: 'smooth',
+                                  });
+                                }}
+                                onClick={(message) => {
+                                  setCurrentMessage(message);
+                                  handleSend(message, 0, false, null);
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* 右列 */}
+                        <div className="w-1/2 flex flex-col space-y-4">
+                          <div className="flex-1 bg-white rounded-lg shadow-md flex items-center justify-center text-black font-bold p-4">
+                            如何开启新一轮对话？
+                          </div>
+                          <div className="flex-1 bg-white rounded-lg shadow-md flex items-center justify-center text-black font-bold p-4">
+                            如何查看之前的聊天记录？
+                          </div>
+                          <div className="flex-1 bg-white rounded-lg shadow-md flex items-center justify-center text-black font-bold p-4">
+                            如何删除之前的聊天记录？
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-
+                  {/*
                   <div className="flex items-center justify-center pt-8 pb-2 text-lg">
                     <Paper className="w-[50rem] space-y-6 rounded-xl p-8 shadow-md">
                       <div className="flex relative">
@@ -426,7 +494,8 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                       </div>
                     </Paper>
                   </div>
-                  <div className="text-center text-black text-lg p-5">
+                  */}
+                  {/* <div className="text-center text-black text-lg p-5">
                     您可以从这些问题开始：
                     <QuestionSuggestion
                       followUpQuestions={["从文本分析和绘图报告两个子任务分析近期台海局势"]}
@@ -440,7 +509,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                         handleSend(message, 0, false, null);
                       }}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </>
             ) : (
