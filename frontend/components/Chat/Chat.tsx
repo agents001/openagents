@@ -36,6 +36,14 @@ import { HelpOutlineOutlined } from '@mui/icons-material';
 import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined';
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
+import Modal from 'react-modal';
+import TutorialModal from '../Modal/TutorialModal';
+import { BsChatRightDotsFill } from "react-icons/bs";
+import { 
+  FcAbout,
+  FcDataBackup,
+  FcDeleteDatabase
+} from "react-icons/fc";
 
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
@@ -79,6 +87,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); //关于如何开启新一轮对话的说明
 
   const tooltips = {
     Agent:
@@ -319,7 +328,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   ]);
 
   return (
-    <div className="relative flex-1 overflow-hidden bg-[#F3F3F3]">
+    <div className="relative w-full flex-1 overflow-hidden bg-[#F3F3F3]">
       {modelError ? (
         <ErrorMessageDiv error={modelError} />
       ) : (
@@ -340,13 +349,13 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                       Please choose your Agent & Plugins to continue
                     </div>
                   </div> */}
-                  <div className="flex justify-center items-center h-[500px] bg-gray-100">
-                    <div>
-                      <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">你好！我是外交领域大模型助手。</h1>
-                      <div className="flex h-full">
+                  <div className="justify-center items-center h-[500px] w-full bg-gray-100">
+                    <div className="flex-1">
+                      <div className="text-3xl w-full font-bold text-gray-800 text-center mt-40 mb-20">你好！我是外交领域大模型助手。</div>
+                      <div className="flex h-full w-full items-center justify-center">
                         {/* 左列 */}
-                        <div className="w-1/2 pr-4 flex items-stretch">
-                          <div className="flex flex-col w-full bg-white rounded-lg shadow-md items-center justify-center text-black font-bold p-4">
+                        <div className="w-1/4 pr-4 flex items-stretch">
+                          <div className="flex flex-col w-full bg-white rounded-xl shadow-md items-center justify-center text-black font-medium tracking-wide p-4">
                             📧您可以从这些问题开始：
                             <div>
                               <QuestionSuggestion
@@ -394,14 +403,29 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                         </div>
                         
                         {/* 右列 */}
-                        <div className="w-1/2 flex flex-col space-y-4">
-                          <div className="flex-1 bg-white rounded-lg shadow-md flex items-center justify-center text-black font-bold p-4">
+                        <div className="w-1/4 flex flex-col space-y-4">
+
+                          <TutorialModal 
+                            isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
+                          />
+
+                          <div 
+                            className="flex-1 bg-white rounded-xl shadow-md flex items-center justify-center text-black font-medium tracking-wide p-4"
+                            onClick={() => setIsModalOpen(true)}
+                          >
+                            <FcAbout size={20}/>
                             如何开启新一轮对话？
                           </div>
-                          <div className="flex-1 bg-white rounded-lg shadow-md flex items-center justify-center text-black font-bold p-4">
+                          
+                  
+
+
+                          <div className="flex-1 bg-white rounded-xl shadow-md flex items-center justify-center text-black font-medium tracking-wide p-4">
+                            <FcDataBackup size={20}/>
                             如何查看之前的聊天记录？
                           </div>
-                          <div className="flex-1 bg-white rounded-lg shadow-md flex items-center justify-center text-black font-bold p-4">
+                          <div className="flex-1 bg-white rounded-xl shadow-md flex items-center justify-center text-black font-medium tracking-wide p-4">
+                            <FcDeleteDatabase size={20}/>
                             如何删除之前的聊天记录？
                           </div>
                         </div>
