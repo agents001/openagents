@@ -526,7 +526,7 @@ export const ChatMessage: FC<Props> = memo(
         </Paper>
 
         {message.role === 'user' && (
-          <PersonIcon className="bg-[#4B2E83] w-8 h-8 text-white p-1 rounded-full mr-28 mb-[13px]" />
+          <PersonIcon className="bg-[#7E0000] w-8 h-8 text-white p-1 rounded-full mr-28 mb-[13px]" />
         )}
       </div>
     );

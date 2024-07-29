@@ -239,7 +239,7 @@ export const ChatbarSettings = <T,>({
           />
           <button
             className="text-sidebar flex w-[200px] flex-shrink-0 cursor-pointer select-none items-center justify-center 
-              gap-2 rounded-xl p-2 text-white bg-[#4B2E83] font-[600]"
+              gap-2 rounded-xl p-2 text-white bg-[#7E0000] font-[600]"
             onClick={() => {
               fileInputRef.current?.click();
             }}

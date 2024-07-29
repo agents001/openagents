@@ -126,7 +126,7 @@ const Sidebar = <T,>({
         </div>
         <div className="flex items-center justify-center pb-1">
           <button
-            className={`flex w-[200px] flex-shrink-0 cursor-pointer select-none items-center justify-center gap-2 bg-[#4B2E83]
+            className={`flex w-[200px] flex-shrink-0 cursor-pointer select-none items-center justify-center gap-2 bg-[#7E0000]
              rounded-xl p-2 text-white font-[600]`}
             onClick={() => {
               handleCreateItem();
@@ -146,7 +146,7 @@ const Sidebar = <T,>({
         {footerComponent}
         <div>
           <button
-              className={`flex w-[200px] flex-shrink-0 cursor-pointer select-none items-center justify-center gap-2 bg-[#4B2E83]
+              className={`flex w-[200px] flex-shrink-0 cursor-pointer select-none items-center justify-center gap-2 bg-[#7E0000]
               rounded-xl p-2 text-white font-[600]`}
               onClick={async () => {
                 let response;
