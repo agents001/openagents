@@ -64,6 +64,7 @@
     "react-simple-code-editor": "^0.13.1",
     "react-syntax-highlighter": "^15.5.0",
     "react-tabs": "^6.0.0",
+    "react-transition-group": "^4.4.5",
     "react-vega": "^7.6.0",
     "reactflow": "^11.7.0",
     "rehype-mathjax": "^4.0.2",

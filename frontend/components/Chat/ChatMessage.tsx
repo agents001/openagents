@@ -37,6 +37,8 @@ import List from '@mui/material/List';
 import Paper from '@mui/material/Paper';
 import clipboardCopy from 'clipboard-copy';
 
+import { CSSTransition } from 'react-transition-group';
+
 export interface Props {
   message: Message;
   messageIndex: number;
@@ -502,19 +504,19 @@ export const ChatMessage: FC<Props> = memo(
 
               {/* copy and retry btns*/}
               {showButtons && (
-                <div className="flex z-[999] absolute bottom-[-23px] left-1">
-                  <button className="flex" onClick={handleCopyMessage}>
-                    <IconCopy color="#7B7B7B" size={20} />
-                    <span className="text-xs text-[#7B7B7B] font-[600] ml-1 mt-[3px]">
+                <div className="flex z-[999] left-1">
+                  <button className="flex bg-blue-500 p-2 rounded-lg" onClick={handleCopyMessage}>
+                    <IconCopy color="white" size={20} />
+                    <span className="text-xs text-[white] font-[500] ml-1 mt-[3px]">
                       复制回答内容到剪贴板
                     </span>
                   </button>
                   {!messageIsStreaming &&
                     selectedConversation &&
                     selectedConversation.messages.length > 0 && (
-                      <button className="flex ml-3" onClick={onRegenerate}>
-                        <IconRepeat color="#7B7B7B" size={20} />
-                        <span className="text-xs text-[#7B7B7B] font-[600] ml-1 mt-[3px]">
+                      <button className="flex bg-red-500 p-2 rounded-lg ml-2" onClick={onRegenerate}>
+                        <IconRepeat color="white" size={20} />
+                        <span className="text-xs text-[white] font-[600] ml-1 mt-[3px]">
                           我不满意，请重新回答
                         </span>
                       </button>

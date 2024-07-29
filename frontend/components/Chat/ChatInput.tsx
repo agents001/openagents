@@ -19,6 +19,8 @@ import HomeContext from '@/pages/api/home/home.context';
 
 import { MenuItem, Select } from '@mui/material';
 
+import { FaPlus } from "react-icons/fa6";
+
 interface Props {
   onSend: (message: Message, plugin: Plugin | null) => void;
   onScrollDownClick: () => void;
@@ -49,6 +51,7 @@ export const ChatInput = ({
     },
     dispatch: homeDispatch,
     handleUpdateConversation,
+    handleNewConversation,
   } = useContext(HomeContext);
 
   const [content, setContent] = useState<string>();
@@ -164,7 +167,17 @@ export const ChatInput = ({
               Response successfully stopped! Please edit your message or retry.
             </div>
           )}
-
+        <button
+            className={`flex flex-shrink-0 cursor-pointer select-none items-center justify-center gap-2 bg-[#7E0000]
+              rounded-xl py-2 px-4 text-white font-[600]`}
+            onClick={() => {
+              handleNewConversation();
+              // handleSearchTerm('');
+            }}
+          >
+            <FaPlus />
+            开始一个新的对话
+        </button>
         <div className="relative flex flex-grow flex-col border rounded-xl border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)]">
           {!messageIsStreaming && showInputBox && (
             <>
@@ -208,7 +221,6 @@ export const ChatInput = ({
               </div>
             </>
           )}
-
           {showInputBox && (
             <textarea
               ref={textareaRef}
@@ -234,7 +246,7 @@ export const ChatInput = ({
           )}
           {showInputBox && (
             <button
-              className="absolute right-[5px] top-[5px] rounded-xl text-neutral-800"
+              className="absolute right-[5px] top-[5px] rounded-full text-neutral-800"
               onClick={handleSend}
             >
               {messageIsStreaming ? (
