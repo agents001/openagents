@@ -28,6 +28,8 @@ def get_llm_list():
 
 def get_llm(llm_name: str, **kwargs) -> BaseLanguageModel:
     """Gets the llm model by its name."""
+    # with open('debugoutput.txt', 'w') as file:
+    #     file.write(str(kwargs)) # 经过此处测试，发现kwargs里面只包括  {'temperature': 0.7}
     if llm_name in ["gpt-3.5-turbo","gpt-3.5-turbo-16k", "gpt-4","LLM-base Agent","gpt-4o-mini"]:
         openai_api_type = os.getenv("OPENAI_API_TYPE", "open_ai")
         if openai_api_type == "open_ai":
