@@ -38,7 +38,7 @@ def get_llm(llm_name: str, **kwargs) -> BaseLanguageModel:
                 return ChatOpenAI(model="gpt-4o-mini",temperature=temperature,api_key='sk-MTfzmlK28vjHLCY1f72UVD7tlu0UPnt8Gd9GHnttyQsGosal',base_url='https://api.chatanywhere.tech/v1',streaming=True,
                 verbose=True)
             else:
-                return ChatOpenAI(model="gpt-3.5-turbo-16k",temperature=temperature,api_key='sk-fQ7kzlsGQ8J4jjyj1MsvMmUkAkXflD5TEwgcG4KlJGrkg5Tn',base_url='https://api.chatanywhere.tech/v1',streaming=True,
+                return ChatOpenAI(model="gpt-3.5-turbo-16k",temperature=temperature,api_key='sk-MTfzmlK28vjHLCY1f72UVD7tlu0UPnt8Gd9GHnttyQsGosal',base_url='https://api.chatanywhere.tech/v1',streaming=True,
                 verbose=True)
             chat_openai = ChatOpenAI
             kwargs.update({"model_name": llm_name})

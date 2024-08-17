@@ -24,6 +24,6 @@ class JsonDataModel(DataModel):
                 else:
                     llm_side_data[key] = str(value)
 
-            return json.dumps(llm_side_data, indent=4)
+            return json.dumps(llm_side_data, indent=4,ensure_ascii=False)
         else:
             raise NotImplementedError

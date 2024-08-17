@@ -119,7 +119,7 @@ class KnowledgeRetriever:
             return bm25_retriever
 
         def get_multiquery_retriever(vectordb,llm = None, **kwargs):
-            llm = ChatOpenAI(model="gpt-4o-mini",api_key='sk-7MXSRgc2cFT8G8g2V15NINs0IKGAAbrG8zllzbR1IgdWQxb3',base_url='https://api.chatanywhere.tech/v1')
+            llm = ChatOpenAI(model="gpt-4o-mini",api_key='sk-MTfzmlK28vjHLCY1f72UVD7tlu0UPnt8Gd9GHnttyQsGosal',base_url='https://api.chatanywhere.tech/v1')
             return MultiQueryRetriever.from_llm(
             retriever = vectordb.as_retriever(search_type="similarity_score_threshold",search_kwargs={"score_threshold": 0.2}),llm=llm,include_original=True
         )
