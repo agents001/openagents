@@ -215,6 +215,7 @@ def single_round_chat_with_agent_streaming(
     parent_message_id: int,
     llm_name: str,
     app_type: str = "plugins",
+    **kwargs: Any,
 ) -> Any:
     """Streams the response of the agent to the frontend."""
     assert app_type in APP_TYPES, f"app_type should be one of {APP_TYPES}"
@@ -418,7 +419,6 @@ def single_round_chat_with_agent_streaming(
     share_list = []
 
     stream_handler.for_display = share_list
-
     _wrap_agent_caller(
         interaction_executor,
         {

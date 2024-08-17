@@ -37,6 +37,7 @@ from real_agents.adapters.interactive_executor import initialize_agent
 from real_agents.data_agent import CodeGenerationExecutor, KaggleDataLoadingExecutor,KnowledgeRetriever, KnowledgeBase
 from real_agents.adapters.memory import ConversationReActBufferMemory, \
     ReadOnlySharedStringMemory
+from real_agents.data_agent.copilot_prompt import DATASUMMARY
 import pandas as pd
 import json
 # self code
@@ -44,7 +45,7 @@ from backend.topic.topic_new import topic_analysis
 # import multiprocessing
 
 print("--------->",torch.cuda.device_count())
-news_knowledge_base = KnowledgeBase(store_type="chroma",embedding_model='all-MiniLM-L6-v2',data_path="/data/zhuoran/data/tw_news/tw_news_semantic_split.jsonl",
+news_knowledge_base = KnowledgeBase(store_type="chroma",embedding_model='all-MiniLM-L6-v2',data_path="/data/zhuoran/data/tw_news/tw_news_semantic_percentile_split.jsonl",
                      Persist_directory="/data/zhuoran/data/tw_news/Vectorstore/chroma_db/tw_news2023_semantic_percentile_split")
     #news_knowledge_base =  knowledge_base_register.get_variable(knowledge_base_id)
 news_retriever_executor = KnowledgeRetriever(Knowledge_Base=news_knowledge_base,retrieval_type="ensemble")
@@ -58,6 +59,7 @@ def create_interaction_executor(
         user_id: str = None,
         chat_id: str = None,
         code_execution_mode: str = "local",
+        **kwargs: Dict[str, str],
 ) -> AgentExecutor:
     """Creates an agent executor for interaction.
 
@@ -164,8 +166,8 @@ def create_interaction_executor(
             if 'topic_file_path' not in grounding_source_dict:
                 raw_data_path = '/data/llmagents/data/llm_agent/tai_news_0526/tw_news2023_r3k.json'
                 grounding_source_dict['topic_file_path']='/data/llmagents/data/llm_agent/tai_news_0526/tw_news2023_r3k.json'
-                grounding_source_pool.set_pool_info_with_id(user_id, chat_id,
-                                                        grounding_source_dict)
+                # grounding_source_pool.set_pool_info_with_id(user_id, chat_id,
+                #                                         grounding_source_dict)
             else:
                 raw_data_path = grounding_source_dict['topic_file_path']
             #raw_data_path = '/data/llmagents/data/llm_agent/tai_news_0526/tw_news2023_r3k.json'
@@ -210,6 +212,8 @@ Please provide a succinct yet meaningful summary for the topic, count and summar
             grounding_source_dict[file_path] = data_model
             #TODO 这个主题分析的表格可以放上去
             input_grounding_source = [gs for gs in grounding_source_dict.values()]
+            grounding_source_pool.set_pool_info_with_id(user_id, chat_id,
+                                                            grounding_source_dict)
             
             # Get the result
             results = basic_chat_executor.run(
@@ -232,6 +236,7 @@ Please provide a succinct yet meaningful summary for the topic, count and summar
                         "table": table_data,
                     }
                 )
+            observation.filter_keys = ["table"]
             return observation
             # if results["result"]["success"]:
             #     if results["result"]["result"] is not None:
@@ -596,6 +601,7 @@ Please provide a succinct yet meaningful summary for the topic, count and summar
             return results["result"]
     def run_knowledge_base_retriever(term: str) -> List:
         try:
+           
             results = news_retriever_executor.run(llm=llm,user_intent=term)
             
             #todo 处理成json文件，然后存一下grounding_source_dict
@@ -610,20 +616,32 @@ Please provide a succinct yet meaningful summary for the topic, count and summar
                 return y
             original_list = list(map(change,dict_list))
             docs = pd.DataFrame(original_list)
-            path = '/data/zhuoran/code/openagents/test.jsonl'
-            with open(path, 'w') as file:
-                # 遍历DataFrame的每一行
-                for _, row in docs.iterrows():
-                    # 将行转换为JSON字符串
-                    json_str = row.to_json()
-                    # 写入文件，每个JSON对象后跟一个换行符
-                    file.write(json_str + '\n')
-            # grounding_source_dict = grounding_source_pool.get_pool_info_with_id(user_id,
-            #                                                                     chat_id,
-            #                                                                     default_value={})
-            # grounding_source_dict['topic_file_path']=path
-            # grounding_source_pool.set_pool_info_with_id(user_id, chat_id,
-            #                                                 grounding_source_dict)
+            # 写入文件的同时应该更新现有文件的信息
+            
+            #获取用户本地存储文件夹
+            folder = create_personal_folder(user_id)
+            path = folder+'/retrieval_result.csv'
+            # with open(path, 'w') as file:
+            #     # 遍历DataFrame的每一行
+            #     for _, row in docs.iterrows():
+            #         # 将行转换为JSON字符串
+            #         json_str = row.to_json()
+            #         # 写入文件，每个JSON对象后跟一个换行符
+            #         file.write(json_str + '\n')
+            docs.to_csv(path,index=False)
+            filename = 'retrieval_result.csv'
+            data_model = get_data_model_cls(filename).from_raw_data(
+                raw_data=docs,
+                raw_data_name=filename,
+                raw_data_path=path,
+            )
+            grounding_source_dict = grounding_source_pool.get_pool_info_with_id(user_id,
+                                                                                chat_id,
+                                                                                default_value={})
+            grounding_source_dict['topic_file_path']=path
+            grounding_source_dict[path]=data_model
+            grounding_source_pool.set_pool_info_with_id(user_id, chat_id,
+                                                            grounding_source_dict)
             
             columns = list(map(lambda item: {"accessorKey": item, "header": item},
                               original_list[0].keys() ))
@@ -631,6 +649,7 @@ Please provide a succinct yet meaningful summary for the topic, count and summar
             human_side_data_type = "table"
             data = { "content": human_side_data,
                     "type": human_side_data_type}
+            
             results = JsonDataModel.from_raw_data(
                     {
                         "success": True,
@@ -638,6 +657,7 @@ Please provide a succinct yet meaningful summary for the topic, count and summar
                         "result": results['answer']
                         }
             )
+            results.filter_keys = ["table"]
             #logger.bind(msg_head=f"KnowledgeRetriever results({llm})").debug(results)
             # if results["result"]["success"]:
             #     results = JsonDataModel.from_raw_data(
@@ -845,7 +865,26 @@ def chat() -> Response | Dict:
             grounding_source_dict = grounding_source_pool.get_pool_info_with_id(user_id,
                                                                                 chat_id,
                                                                                 default_value={})
+            # folder = create_personal_folder(user_id)
+            # path = folder+'/retrieval_result.csv'
+            # data = load_grounding_source(path)
+            # data_model = get_data_model_cls(path).from_raw_data(
+            #     raw_data=data,
+            #     raw_data_name='retrieval_result.csv',
+            #     raw_data_path=file_path,
+            # )
+            # grounding_source_dict['topic_file_path']=path
+            # grounding_source_dict['path']=data_model
+            # grounding_source_pool.set_pool_info_with_id(user_id, chat_id,
+            #                                                 grounding_source_dict)
             
+            summary = DATASUMMARY
+            for key in grounding_source_dict.keys():
+                if isinstance(grounding_source_dict[key], DataModel):
+                    path = key
+                    executor = get_data_summary_cls(path)()
+                    data = grounding_source_dict[key]
+                    summary += executor.run(data,llm)
             # Build executor and run chat
             interaction_executor = create_interaction_executor(
                 grounding_source_dict=grounding_source_dict,
@@ -879,7 +918,7 @@ def chat() -> Response | Dict:
                         parent_message_id=parent_message_id,
                         llm_name=llm_name,
                         stream_handler=stream_handler,
-                        app_type="copilot"
+                        app_type="copilot",
                     ),
                     content_type="application/json",
                 )

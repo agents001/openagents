@@ -31,7 +31,7 @@ def get_llm(llm_name: str, **kwargs) -> BaseLanguageModel:
         openai_api_type = os.getenv("OPENAI_API_TYPE", "open_ai")
         if openai_api_type == "open_ai":
             temperature = kwargs.get("temperature", 0.5)
-            return ChatOpenAI(model="gpt-3.5-turbo-16k",temperature=temperature,api_key='sk-fQ7kzlsGQ8J4jjyj1MsvMmUkAkXflD5TEwgcG4KlJGrkg5Tn',base_url='https://api.chatanywhere.tech/v1',streaming=True,
+            return ChatOpenAI(model="gpt-4o-mini",temperature=temperature,api_key='sk-7MXSRgc2cFT8G8g2V15NINs0IKGAAbrG8zllzbR1IgdWQxb3',base_url='https://api.chatanywhere.tech/v1',streaming=True,
             verbose=True)
             chat_openai = ChatOpenAI
             kwargs.update({"model_name": llm_name})

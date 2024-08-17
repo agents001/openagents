@@ -15,7 +15,7 @@ from langchain.tools.base import BaseTool
 
 from real_agents.adapters.agent_helpers.agent import Agent
 from real_agents.adapters.agent_helpers.output_parser import ConversationOutputParser
-from real_agents.data_agent.copilot_prompt import PREFIX, SUFFIX, TEMPLATE_TOOL_RESPONSE, fake_continue_prompt
+from real_agents.data_agent.copilot_prompt import PREFIX, SUFFIX, TEMPLATE_TOOL_RESPONSE, fake_continue_prompt, DATASUMMARY
 from real_agents.adapters.data_model import DataModel, MessageDataModel
 from langchain.prompts import (
     BasePromptTemplate,
@@ -94,18 +94,27 @@ class ConversationalChatAgent(Agent):
         format_instructions = format_instructions.format(tool_names=tool_names)
 
         # system message
-        system_message = system_message + f"{tool_strings}\n\n{format_instructions}"
+        system_message = system_message + f"{tool_strings}\n\n{format_instructions}" + DATASUMMARY
 
         # human input
         final_prompt = human_message
+        #TODO 这里根据input_varibles应该定义一下messages，而不是定死的
         if input_variables is None:
             input_variables = ["input", "chat_history", "agent_scratchpad"]
-        messages = [
-            SystemMessagePromptTemplate.from_template(system_message),
-            MessagesPlaceholder(variable_name="chat_history"),
-            HumanMessagePromptTemplate.from_template(final_prompt),
-            MessagesPlaceholder(variable_name="agent_scratchpad"),
-        ]
+            messages = [
+                SystemMessagePromptTemplate.from_template(system_message),
+                MessagesPlaceholder(variable_name="chat_history"),
+                HumanMessagePromptTemplate.from_template(final_prompt),
+                MessagesPlaceholder(variable_name="agent_scratchpad"),
+            ]
+        else:
+            messages = [
+                SystemMessagePromptTemplate.from_template(system_message),
+                MessagesPlaceholder(variable_name="data_summary"),
+                MessagesPlaceholder(variable_name="chat_history"),
+                HumanMessagePromptTemplate.from_template(final_prompt),
+                MessagesPlaceholder(variable_name="agent_scratchpad"),
+            ]
         return ChatPromptTemplate(input_variables=input_variables, messages=messages)
 
     @override

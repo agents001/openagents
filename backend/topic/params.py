@@ -15,14 +15,14 @@ feedback_dict = {"政治磋商": '04', "公开声明": '01', "外交合作": '05
 PERSON_TOPIC_NUM = 5
 
 
-NEWS_DIR = '/data/llmagents/data/llm_agent/tai_news_0526/'
+NEWS_DIR = '/data/zhuoran/code/openagents/other_data/llm_agent/tai_news_0526'
 # RES_DIR = '/home/dingfei/taihai/result/document'  # document/event-level
-sent_embed_model_dir = '/data/llmagents/plm/all-MiniLM-L6-v2-copy'
-sent_embed_save_dir = '/data/llmagents/data/llm_agent/tai_news_0526/sent_embed/'
-TABLE_DATA_DIR = '/data/llmagents/data/llm_agent/tai_news_0526/table_data/'
+sent_embed_model_dir = '/data/zhuoran/code/openagents/other_data/plm/all-MiniLM-L6-v2-copy'
+sent_embed_save_dir = '/data/zhuoran/code/openagents/other_data/llm_agent/tai_news_0526/sent_embed'
+TABLE_DATA_DIR = '/data/zhuoran/code/openagents/other_data/llm_agent/tai_news_0526/table_data'
 #save_path = '/data/llmagents/code/OpenAgents/backend/data/DefaultUser/'
 save_path = '/data/zhuoran/code/openagents/backend/data/DefaultUser/'
-model_id = '/data/llmagents/plm/llama-2-13B-chat-hf-copy'
+model_id = '/data/zhuoran/code/openagents/other_data/plm/llama-2-13B-chat-hf-copy'
 # model_id = '/data/llmagents/plm/llama-2-7B-chat-hf'
 
 # ABSA_MODEL_ID = '/data/dingfei/models/APC'

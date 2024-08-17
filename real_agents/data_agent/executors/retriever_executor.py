@@ -119,8 +119,7 @@ class KnowledgeRetriever:
             return bm25_retriever
 
         def get_multiquery_retriever(vectordb,llm = None, **kwargs):
-            llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0,api_key="sk-fQ7kzlsGQ8J4jjyj1MsvMmUkAkXflD5TEwgcG4KlJGrkg5Tn",
-                        base_url="https://api.chatanywhere.tech/v1")
+            llm = ChatOpenAI(model="gpt-4o-mini",api_key='sk-7MXSRgc2cFT8G8g2V15NINs0IKGAAbrG8zllzbR1IgdWQxb3',base_url='https://api.chatanywhere.tech/v1')
             return MultiQueryRetriever.from_llm(
             retriever = vectordb.as_retriever(search_type="similarity_score_threshold",search_kwargs={"score_threshold": 0.2}),llm=llm,include_original=True
         )
@@ -149,12 +148,12 @@ class KnowledgeRetriever:
                 Retrievers.append(retriever)
             return EnsembleRetriever(retrievers = Retrievers,weights=Weights)
     def get_prompt_template(self):
-            RETRIEVAL_QA_PROMPT = """Based on a series of documents as follow, give detailed answers with appropriate references from background knowledge documents. If the user asks a question that is not directly found in the context below, try to summarise the context and answer the question.
-            GDo not output irrelevant information and redundant answer.
+            RETRIEVAL_QA_PROMPT = """Based on a series of documents as follow, try to summarise the documents around user input in detail to facilitate subsequent reasoning and analysis .
+            Note : Do not output irrelevant information and redundant answer.
 
-            <context>
+            <document>
             {context}
-            </context>
+            </document>
 
             <User question>
             {input}
