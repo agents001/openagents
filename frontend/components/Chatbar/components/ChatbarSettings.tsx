@@ -216,9 +216,9 @@ export const ChatbarSettings = <T,>({
   return (
     <>
       <div className="flex flex-col space-y-1 border-t border-white/50 pt-1 text-sm">
-        <span className="pl-3 pt-1 text-white font-[500] text-lg">Files</span>
+        <span className="pl-3 pt-1 text-white font-[500] text-lg">已上传的文件</span>
         <Search
-          placeholder="Search File"
+          placeholder="输入文件名以搜索文件"
           searchTerm={searchTerm}
           onSearch={handleSearchTerm}
         />
@@ -239,13 +239,13 @@ export const ChatbarSettings = <T,>({
           />
           <button
             className="text-sidebar flex w-[200px] flex-shrink-0 cursor-pointer select-none items-center justify-center 
-              gap-2 rounded-xl p-2 text-white bg-[#4B2E83] font-[600]"
+              gap-2 rounded-xl p-2 text-white bg-[#7E0000] font-[600]"
             onClick={() => {
               fileInputRef.current?.click();
             }}
           >
             <IconPlus size={16} />
-            {t('Upload')}
+            {t('上传新的文件！')}
           </button>
 
           <button

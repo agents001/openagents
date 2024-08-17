@@ -7,13 +7,13 @@
 <defs>
 <linearGradient id="paint0_linear_237_294" x1="110.048" y1="72.4861" x2="181.841" y2="145.731" gradientUnits="userSpaceOnUse">
 <stop stop-color="#0F4D92"/>
-<stop offset="0.494791" stop-color="#4B2E83"/>
-<stop offset="0.947925" stop-color="#4B2E83" stop-opacity="0"/>
+<stop offset="0.494791" stop-color="#7E0000"/>
+<stop offset="0.947925" stop-color="#7E0000" stop-opacity="0"/>
 </linearGradient>
 <linearGradient id="paint1_linear_237_294" x1="110.048" y1="72.4861" x2="181.841" y2="145.731" gradientUnits="userSpaceOnUse">
 <stop stop-color="#0F4D92"/>
-<stop offset="0.494791" stop-color="#4B2E83"/>
-<stop offset="0.947925" stop-color="#4B2E83" stop-opacity="0"/>
+<stop offset="0.494791" stop-color="#7E0000"/>
+<stop offset="0.947925" stop-color="#7E0000" stop-opacity="0"/>
 </linearGradient>
 <linearGradient id="paint2_linear_237_294" x1="43.1758" y1="73.3826" x2="110.652" y2="139.768" gradientUnits="userSpaceOnUse">
 <stop stop-color="#00B38C" stop-opacity="0"/>

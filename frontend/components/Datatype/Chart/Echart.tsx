@@ -415,9 +415,15 @@ const EChartsChart: React.FC<EChartsChartProps> = memo(({ content }) => {
   const [chartJson, setChartJson] = useState<any>({});
 
   useEffect(() => {
-    //console.log(content);
-    const data = JSON.parse(content);
-    setChartJson(data);
+    console.log(content);
+    try {
+        const data = JSON.parse(content);
+        setChartJson(data);
+      } catch (error) {
+        console.error("Invalid JSON format:", error);
+        // 在这里处理非JSON数据的情况
+        // 例如：setChartJson(null);
+      }
   }, []);
 
   useEffect(() => {
